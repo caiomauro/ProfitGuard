@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/rutemauro/Desktop/IPSMAINFOLDER/backend/backend.csproj": {}
+    "/Users/rutemauro/Documents/GitHub/ProfitGuard/IPSMAINFOLDER/backend/backend.csproj": {}
   },
   "projects": {
-    "/Users/rutemauro/Desktop/IPSMAINFOLDER/backend/backend.csproj": {
+    "/Users/rutemauro/Documents/GitHub/ProfitGuard/IPSMAINFOLDER/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rutemauro/Desktop/IPSMAINFOLDER/backend/backend.csproj",
+        "projectUniqueName": "/Users/rutemauro/Documents/GitHub/ProfitGuard/IPSMAINFOLDER/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/Users/rutemauro/Desktop/IPSMAINFOLDER/backend/backend.csproj",
+        "projectPath": "/Users/rutemauro/Documents/GitHub/ProfitGuard/IPSMAINFOLDER/backend/backend.csproj",
         "packagesPath": "/Users/rutemauro/.nuget/packages/",
-        "outputPath": "/Users/rutemauro/Desktop/IPSMAINFOLDER/backend/obj/",
+        "outputPath": "/Users/rutemauro/Documents/GitHub/ProfitGuard/IPSMAINFOLDER/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/rutemauro/.nuget/NuGet/NuGet.Config"
