@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif, 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+textarea:focus, input:focus{
+  border: none;
+  outline: none;
+}
+
+.custom-background-light {
+  background-color: #050505;
+  min-height: 100vh; /* Optional: Set minimum height to ensure the color covers the full height */
+}
+
+.custom-background-img {
+  background-image: url('./Art/background.jpg'); /* Replace 'path/to/background.jpg' with the actual path to your image */
+  background-size: cover; /* This ensures that the background image covers the entire element */
+  background-repeat: no-repeat;
+}
+
+.custom-element {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.sidebar-border-radius{
+  border-top-right-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
+}
+
+.sidebar-drop-shadow{
+  box-shadow: 0 0px 28px -1px rgb(0 0 0 / 1);
+}
+.custom-inset-shadow {
+  box-shadow: inset 0 2px 4px 0 rgba(255, 255, 255, 0.397);
+}
+
+.category-container {
+  max-height: 100vh; /* Set the maximum height to 100% of the viewport height */
+  overflow-y: auto; /* Add a scrollbar if the content overflows the max height */
+}
+
+.divit {
+  border-radius: 0px;
+  background: #e0e0e0;
+  box-shadow: inset 6px 6px 12px #c1c1c1,
+              inset -6px -6px 12px #ffffff;
+}
+
+.search-bar-morph {
+  border-radius: 50%;
+  background: #e0e0e0;
+  box-shadow: inset 5px 5px 9px #c3c3c3,
+              inset -5px -5px 9px #fdfdfd;
+}
+
+::placeholder {
+  color: White;
+}
+
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
