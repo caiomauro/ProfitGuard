@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Authorization;
 using backend.ApplicationUser;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 
 namespace CategoryDataController
@@ -131,5 +132,73 @@ namespace CategoryDataController
             }
             return new JsonResult(table);
         }
+
+    [HttpPatch]
+    [Route("SetGoal")]
+    public async Task<IActionResult> SetGoal([FromForm] float profit_goal)
+    {
+        Console.WriteLine($"Received goal value: {profit_goal}");
+        string currentUserName = User.Identity.Name;
+        ApplicationUser currentUser = await _userManager.FindByNameAsync(currentUserName);
+
+        string query = "UPDATE Users SET profit_goal = @profit_goal WHERE Id = @Id;";
+        DataTable table = new DataTable();
+        string sqlDatasource = _configuration.GetConnectionString("IPSDbCon");
+        using (MySqlConnection myCon = new MySqlConnection(sqlDatasource))
+        {
+            try
+            {
+                myCon.Open();
+                using (MySqlCommand myCommand = new MySqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@Id", currentUser.Id);
+                    myCommand.Parameters.AddWithValue("@profit_goal", profit_goal);
+                    myCommand.ExecuteNonQuery();
+                }
+
+                using (MySqlCommand myCommand = new MySqlCommand("SELECT * FROM Users;", myCon))
+                {
+                    using (MySqlDataReader myReader = myCommand.ExecuteReader())
+                    {
+                        table.Load(myReader);
+                        myReader.Close();
+                    }
+                }
+
+            }
+            finally
+            {
+                myCon.Close();
+            }
+        }
+        return new JsonResult(table);
+    }
+
+    [HttpGet]
+    [Route("GetUserInfo")]
+    public async Task<JsonResult> GetUserInfo()
+    {
+
+        string currentUserName = User.Identity.Name;
+        ApplicationUser currentUser = await _userManager.FindByNameAsync(currentUserName);
+
+        string query = "select * from Users where Id = @Id;";
+        DataTable table = new DataTable();
+        string sqlDatasource = _configuration.GetConnectionString("IPSDbCon");
+        using (MySqlConnection myCon = new MySqlConnection(sqlDatasource))
+        {
+            myCon.Open();
+            using (MySqlCommand myCommand = new MySqlCommand(query, myCon))
+            {
+                myCommand.Parameters.AddWithValue("@Id", currentUser.Id);
+
+                using (MySqlDataReader myReader = myCommand.ExecuteReader())
+                {
+                    table.Load(myReader);
+                }
+            }
+        }
+        return new JsonResult(table);
+    }
     }
 }

@@ -14,6 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
@@ -37,6 +38,7 @@ const Login = () => {
       );
 
       if (response.ok) {
+        setErrorMessage("");
         const userData = await response.json();
 
         // Update user context upon successful login
@@ -52,40 +54,18 @@ const Login = () => {
 
         localStorage.setItem("token", userData.Token);
 
-        /*
-        const categoriesResponse = await fetch('http://localhost:5066/api/CategoryData/GetData', {
-            headers: {
-            'Authorization': `Bearer ${userData.Token}`,
-            },
-        });
-
-        if (categoriesResponse.ok) {
-            const categoriesData = await categoriesResponse.json();
-            updateCategoryData(categoriesData);
-        }
-
-        const itemsResponse = await fetch('http://localhost:5066/api/ItemData/GetData', {
-            headers: {
-            'Authorization': `Bearer ${userData.Token}`,
-            },
-        });
-
-        if (itemsResponse.ok) {
-            const itemsData = await itemsResponse.json();
-            updateItemData(itemsData);
-        }
-        */
-
         setLoading(false);
         navigate("/main");
       } else {
         // Handle authentication error
         setLoading(false);
         console.error("Authentication failed");
+        setErrorMessage("Password or username incorrect");
       }
     } catch (error) {
       setLoading(false);
       console.error("Error during authentication:", error);
+      setErrorMessage("Internal Server Error!");
     }
   };
 
@@ -160,6 +140,7 @@ const Login = () => {
           </div>
 
           <div>
+            <p className="text-red-500">{errorMessage}</p>
             <button
               type="submit"
               className="bg-accent px-4 py-2 rounded-md hover:underline focus:outline-none focus:shadow-outline-blue"

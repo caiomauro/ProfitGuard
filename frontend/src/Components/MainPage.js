@@ -12,12 +12,17 @@ const MainPage = () => {
   const [newCategory, setNewCategory] = useState("");
   const [deleteCategoryName, setDeleteCategoryName] = useState("");
   const [deleteCategoryId, setDeleteCategoryId] = useState("");
-  const [profitGoal, setProfitGoal] = useState(0);
+  const [goal, setGoal] = useState();
+  const [userGoal, setUserGoal] = useState();
 
   useEffect(() => {
     handleLogItemData();
     handleLogCategoryData();
   }, []);
+
+  const resetState = () => {
+    setGoal();
+  }
 
   const handleLogItemData = async () => {
     const token = localStorage.getItem("token");
@@ -57,18 +62,68 @@ const MainPage = () => {
     }
   };
 
-  const getProfitGoal = async () => {
-    const token = localStorage.getItem("token");
+  const setProfitGoal = async () => {
+    const token = localStorage.getItem("token"); // Replace with your actual token key
+    const parsedGoal = parseFloat(goal);
 
-    const usersResponse = await fetch(
-      "http://localhost:5066/api/CategoryData/GetData",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      try {
+        console.log("sending: ", parsedGoal);
+        const response = await fetch(
+          "http://localhost:5066/api/CategoryData/SetGoal",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `Bearer ${token}`,
+            },
+            body: new URLSearchParams({
+              profit_goal: parsedGoal,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        else if (response.ok) {
+          console.log(parseFloat(goal));
+          console.log("Goal set @: ", goal)
+          getUserInfo();
+          resetState();
+        }
+
+      } catch (error) {
+        console.error("Error:", error);
       }
-    );
-  }
+    };
+
+    const getUserInfo = async () => {
+      const token = localStorage.getItem("token");
+  
+      try {
+        const response = await fetch(
+          "http://localhost:5066/api/CategoryData/GetUserInfo",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        else if (response.ok) {
+          const goalData = await response.json();
+          setUserGoal(goalData[0].profit_goal)
+          console.log("Goal value @ = ",goalData[0].profit_goal);
+        }
+  
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
 
   const getTotalProfits = () => {
     const categoryMap = new Map();
@@ -196,7 +251,7 @@ const MainPage = () => {
           className="flex flex-col mr-auto p-4 w-full bg-surface text-white rounded-2xl"
           style={{ fontFamily: "DM Sans, sans-serif" }}
         >
-          <h2 className="text-2xl font-bold mb-4">Profits Goal:</h2>
+          <h2 className="text-2xl font-bold mb-4">Profits Breakdown:</h2>
 
           <div className="w-full border border-bottom border-accent3"></div>
 
@@ -220,12 +275,21 @@ const MainPage = () => {
           className="flex flex-col mr-auto p-4 w-full bg-surface text-white rounded-2xl"
           style={{ fontFamily: "DM Sans, sans-serif" }}
         >
-          <h2 className="text-2xl font-bold mb-4">Profits Breakdown:</h2>
+          <h2 className="text-2xl font-bold mb-4">Profits Goal:</h2>
 
           <div className="w-full border border-bottom border-accent3"></div>
 
           <div className="w-full p-1 rounded-2xl flex-grow overflow-y-auto">
             <div className="flex grid grid-cols-1 rounded-md">
+              <input 
+              type="number" 
+              className="text-black" 
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              ></input>
+              <p>{userGoal}</p>
+              <button onClick={() => setProfitGoal()}>Set Goal</button>
+              <button onClick={() => getUserInfo()}>Get Goal</button>
               <p className="flex-grow text-left text-lg px-3 grid px-2 py-1 mr-2 focus:outline-none font-semilight focus:shadow-outline-gray">
                 Total Profit: <p className="text-green-400">${totalProfit}</p>
               </p>
@@ -307,14 +371,12 @@ const MainPage = () => {
           </button>
 
           <button
-            onClick={handleLogCategoryData}
             className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray"
           >
             Log Category Data
           </button>
 
           <button
-            onClick={handleLogItemData}
             className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray"
           >
             Log Item Data
