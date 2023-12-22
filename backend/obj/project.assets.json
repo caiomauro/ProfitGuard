@@ -8593,11 +8593,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rutemauro/Desktop/IPSMAINFOLDER/ProfitGuard/backend/backend.csproj",
+      "projectUniqueName": "/Users/rutemauro/Documents/GitHub/ProfitGuard/backend/backend.csproj",
       "projectName": "backend",
-      "projectPath": "/Users/rutemauro/Desktop/IPSMAINFOLDER/ProfitGuard/backend/backend.csproj",
+      "projectPath": "/Users/rutemauro/Documents/GitHub/ProfitGuard/backend/backend.csproj",
       "packagesPath": "/Users/rutemauro/.nuget/packages/",
-      "outputPath": "/Users/rutemauro/Desktop/IPSMAINFOLDER/ProfitGuard/backend/obj/",
+      "outputPath": "/Users/rutemauro/Documents/GitHub/ProfitGuard/backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rutemauro/.nuget/NuGet/NuGet.Config"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1iwBokTTvGi97hShcAofSCIdANaPNPf5YC0DFyKa+2vXpZkldqWukC3QS7LivJuZGP90NmltzFDtBm7uywOHuw==",
+  "dgSpecHash": "hWSweTJ+UBchlrmf0iOEvI1AvKVtYgQMtHvTZVSfk8suf2BS1FQH7RjTTPN8pl9wOTU7iuULJvXThDugZXQhsg==",
   "success": true,
-  "projectFilePath": "/Users/rutemauro/Desktop/IPSMAINFOLDER/ProfitGuard/backend/backend.csproj",
+  "projectFilePath": "/Users/rutemauro/Documents/GitHub/ProfitGuard/backend/backend.csproj",
   "expectedPackageFiles": [
     "/Users/rutemauro/.nuget/packages/bouncycastle.cryptography/2.2.1/bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "/Users/rutemauro/.nuget/packages/google.protobuf/3.21.9/google.protobuf.3.21.9.nupkg.sha512",
