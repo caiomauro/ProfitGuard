@@ -285,7 +285,7 @@ const MainPage = () => {
             <div className="flex grid grid-cols-1 rounded-md">
               <Progress
                 progress={percentToGoal}
-                progressLabelPosition="inside"
+                progressLabelPosition="outside"
                 size="xl"
                 labelProgress
                 textLabel={progressBarText}

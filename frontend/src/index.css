@@ -32,6 +32,13 @@ textarea:focus, input:focus{
   background-repeat: no-repeat;
 }
 
+.custom-background-img-home {
+  background-image: url('./Art/background.jpg'); /* Replace 'path/to/background.jpg' with the actual path to your image */
+  background-size: cover; /* This ensures that the background image covers the entire element */
+  background-repeat: no-repeat;
+  opacity: 0.5;
+}
+
 .custom-element {
   font-family: 'DM Sans', sans-serif;
 }
