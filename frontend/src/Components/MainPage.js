@@ -4,6 +4,7 @@ import { useCategoryData } from "../Context/CategoryContext";
 import { useItemData } from "../Context/ItemContext";
 import { useUser } from "../Context/UserContext";
 import Sidebar from "./Sidebar";
+import { Progress } from "flowbite-react";
 
 const MainPage = () => {
   const { categoryData, updateCategoryData } = useCategoryData();
@@ -18,11 +19,12 @@ const MainPage = () => {
   useEffect(() => {
     handleLogItemData();
     handleLogCategoryData();
+    getUserInfo();
   }, []);
 
   const resetState = () => {
-    setGoal();
-  }
+    setGoal("");
+  };
 
   const handleLogItemData = async () => {
     const token = localStorage.getItem("token");
@@ -66,64 +68,60 @@ const MainPage = () => {
     const token = localStorage.getItem("token"); // Replace with your actual token key
     const parsedGoal = parseFloat(goal);
 
-      try {
-        console.log("sending: ", parsedGoal);
-        const response = await fetch(
-          "http://localhost:5066/api/CategoryData/SetGoal",
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Authorization: `Bearer ${token}`,
-            },
-            body: new URLSearchParams({
-              profit_goal: parsedGoal,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    try {
+      console.log("sending: ", parsedGoal);
+      const response = await fetch(
+        "http://localhost:5066/api/CategoryData/SetGoal",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`,
+          },
+          body: new URLSearchParams({
+            profit_goal: parsedGoal,
+          }),
         }
-        else if (response.ok) {
-          console.log(parseFloat(goal));
-          console.log("Goal set @: ", goal)
-          getUserInfo();
-          resetState();
-        }
+      );
 
-      } catch (error) {
-        console.error("Error:", error);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      } else if (response.ok) {
+        console.log(parseFloat(goal));
+        console.log("Goal set @: ", goal);
+        getUserInfo();
+        resetState();
       }
-    };
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
-    const getUserInfo = async () => {
-      const token = localStorage.getItem("token");
-  
-      try {
-        const response = await fetch(
-          "http://localhost:5066/api/CategoryData/GetUserInfo",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-  
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const getUserInfo = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(
+        "http://localhost:5066/api/CategoryData/GetUserInfo",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        else if (response.ok) {
-          const goalData = await response.json();
-          setUserGoal(goalData[0].profit_goal)
-          console.log("Goal value @ = ",goalData[0].profit_goal);
-        }
-  
-      } catch (error) {
-        console.error("Error:", error);
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      } else if (response.ok) {
+        const goalData = await response.json();
+        setUserGoal(goalData[0].profit_goal);
+        console.log("Goal value @ = ", goalData[0].profit_goal);
       }
-    };
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const getTotalProfits = () => {
     const categoryMap = new Map();
@@ -239,9 +237,13 @@ const MainPage = () => {
 
   const totalProfit = getTotalProfits();
 
+  const percentToGoal = Math.floor((totalProfit / userGoal) * 100);
+
   const totalSpending = getTotalSpending();
 
   const totalIncome = getTotalIncome();
+
+  const progressBarText = "Current goal: $" + userGoal;
 
   return (
     <div className="flex custom-background-img">
@@ -275,31 +277,35 @@ const MainPage = () => {
           className="flex flex-col mr-auto p-4 w-full bg-surface text-white rounded-2xl"
           style={{ fontFamily: "DM Sans, sans-serif" }}
         >
-          <h2 className="text-2xl font-bold mb-4">Profits Goal:</h2>
+          <h2 className="text-2xl font-bold mb-4">Profit Goal:</h2>
 
           <div className="w-full border border-bottom border-accent3"></div>
 
           <div className="w-full p-1 rounded-2xl flex-grow overflow-y-auto">
             <div className="flex grid grid-cols-1 rounded-md">
-              <input 
-              type="number" 
-              className="text-black" 
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-              ></input>
-              <p>{userGoal}</p>
-              <button onClick={() => setProfitGoal()}>Set Goal</button>
-              <button onClick={() => getUserInfo()}>Get Goal</button>
-              <p className="flex-grow text-left text-lg px-3 grid px-2 py-1 mr-2 focus:outline-none font-semilight focus:shadow-outline-gray">
-                Total Profit: <p className="text-green-400">${totalProfit}</p>
-              </p>
-              <p className="flex-grow text-left text-lg px-3 grid px-2 py-1 mr-2 focus:outline-none font-semilight focus:shadow-outline-gray">
-                Inventory Cost: <p className="text-red-400">${totalSpending}</p>
-              </p>
-              <p className="flex-grow text-left text-lg px-3 grid px-2 py-1 mr-2 focus:outline-none font-semilight focus:shadow-outline-gray">
-                Net Inventory Value:{" "}
-                <p className="text-orange-400">${totalIncome}</p>
-              </p>
+              <Progress
+                progress={percentToGoal}
+                progressLabelPosition="inside"
+                size="xl"
+                labelProgress
+                textLabel={progressBarText}
+                textLabelPosition="outside"
+                labelText
+              />
+              <div className="flex flex-col flex-row-2 items-center justify-center my-4">
+                <input
+                  value={goal}
+                  required
+                  onChange={(e) => setGoal(e.target.value)}
+                  className="mb-2 p-2 bg-gray-600 placeholder-white/35 rounded-md w-3/5"
+                />
+                <button
+                  className="hover:underline"
+                  onClick={() => setProfitGoal()}
+                >
+                  Set Goal
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -370,15 +376,11 @@ const MainPage = () => {
             Delete Item Data
           </button>
 
-          <button
-            className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray"
-          >
+          <button className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray">
             Log Category Data
           </button>
 
-          <button
-            className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray"
-          >
+          <button className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray">
             Log Item Data
           </button>
         </div>
