@@ -15,6 +15,7 @@ const MainPage = () => {
   const [deleteCategoryId, setDeleteCategoryId] = useState("");
   const [goal, setGoal] = useState();
   const [userGoal, setUserGoal] = useState();
+  const [goalInputVal, setGoalInputVal] = useState("");
 
   useEffect(() => {
     handleLogItemData();
@@ -68,32 +69,37 @@ const MainPage = () => {
     const token = localStorage.getItem("token"); // Replace with your actual token key
     const parsedGoal = parseFloat(goal);
 
-    try {
-      console.log("sending: ", parsedGoal);
-      const response = await fetch(
-        "http://localhost:5066/api/CategoryData/SetGoal",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-          body: new URLSearchParams({
-            profit_goal: parsedGoal,
-          }),
-        }
-      );
+    if (goal >= 1) {
+      setGoalInputVal("")
+      try {
+        console.log("sending: ", parsedGoal);
+        const response = await fetch(
+          "http://localhost:5066/api/CategoryData/SetGoal",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `Bearer ${token}`,
+            },
+            body: new URLSearchParams({
+              profit_goal: parsedGoal,
+            }),
+          }
+        );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      } else if (response.ok) {
-        console.log(parseFloat(goal));
-        console.log("Goal set @: ", goal);
-        getUserInfo();
-        resetState();
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        } else if (response.ok) {
+          console.log(parseFloat(goal));
+          console.log("Goal set @: ", goal);
+          getUserInfo();
+          resetState();
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } else {
+      setGoalInputVal("Please enter a number greater than 0.")
     }
   };
 
@@ -243,7 +249,7 @@ const MainPage = () => {
 
   const totalIncome = getTotalIncome();
 
-  const progressBarText = "Current goal: $" + userGoal;
+  const progressBarText = <p className="text-lg">{"You have completed " + percentToGoal + "%" + "  " + "Current goal: $" + userGoal}</p>;
 
   return (
     <div className="flex custom-background-img">
@@ -279,32 +285,34 @@ const MainPage = () => {
         >
           <h2 className="text-2xl font-bold mb-4">Profit Goal:</h2>
 
-          <div className="w-full border border-bottom border-accent3"></div>
+          <div className="w-full border border-bottom border-accent3 mb-5"></div>
 
           <div className="w-full p-1 rounded-2xl flex-grow overflow-y-auto">
             <div className="flex grid grid-cols-1 rounded-md">
               <Progress
                 progress={percentToGoal}
-                progressLabelPosition="outside"
+                progressLabelPosition="center"
                 size="xl"
                 labelProgress
                 textLabel={progressBarText}
                 textLabelPosition="outside"
                 labelText
               />
-              <div className="flex flex-col flex-row-2 items-center justify-center my-4">
+              <p className="text-red-400 py-2">{goalInputVal}</p>
+              <div className="flex flex-row flex-start items-center gap-4">
                 <input
                   value={goal}
                   required
                   onChange={(e) => setGoal(e.target.value)}
-                  className="mb-2 p-2 bg-gray-600 placeholder-white/35 rounded-md w-3/5"
+                  className="p-2 bg-gray-600 placeholder-white/35 rounded-md w-3/5"
                 />
                 <button
-                  className="hover:underline"
+                  className="hover:underline text-center bg-gray-500 p-2 rounded-md"
                   onClick={() => setProfitGoal()}
                 >
                   Set Goal
                 </button>
+
               </div>
             </div>
           </div>
