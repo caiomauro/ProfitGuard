@@ -10,7 +10,7 @@ const HomePage = () => {
         className="mx-auto w-full h-screen custom-background-img shadow-md rounded-md text-center"
         style={{ fontFamily: "DM Sans, sans-serif" }}
       >
-        <div className="grid grid-cols-3 bg-gray-500/50 border-b border-yellow-500 mb-4 h-20">
+        <div className="grid grid-cols-3 bg-gray-500/50 border-b border-accent mb-4 h-20">
           <div></div>
           <div className="flex items-center justify-center">
           <h2 className="text-2xl text-white font-bold py-4">
@@ -72,7 +72,7 @@ const HomePage = () => {
                 height="336"
               ></img>
               <label className="font-extralight w-2/3 text-center text-white text-lg text-left">
-                Manage similar items from differenct vendors efficiently
+                Manage similar items from different vendors efficiently
               </label>
             </div>
             <div className="flex flex-col items-center justify-center">
