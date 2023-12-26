@@ -77,7 +77,7 @@ const Login = () => {
       >
         <h2 className="text-center text-2xl font-bold mb-4">
           Profit
-          <span className="bg-gray-950 rounded-md text-accent px-1">Gaurd</span>{" "}
+          <span className="bg-gray-950 rounded-md text-accent px-1">Guard</span>{" "}
           by Belmont Tech
         </h2>
         <form onSubmit={handleLogin}>
