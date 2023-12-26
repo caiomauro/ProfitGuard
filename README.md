@@ -1,4 +1,4 @@
-# Agent Toolkit (ATK)
+# ProfitGuard (IPS)
 
 ProfitGuard is an internal profit management system. The goal is to allow my parents pizzeria to increase the net profit without a large investment into marketing to spike sales. ProfitGuard allows users to create an item category, steak, and then add items tied to that category with specific data like cost, sale price, orders per case and vendor. It will then compare items of the same category and compile a list that contains the most profitable items from the respective vendors. It will also show users their inventory total cost, total profit and, gross value.
 
