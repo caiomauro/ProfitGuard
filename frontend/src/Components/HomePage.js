@@ -7,18 +7,18 @@ const HomePage = () => {
   return (
     <div>
       <div
-        className="mx-auto w-full h-screen custom-background-img shadow-md rounded-md text-center"
+        className="flex flex-col mx-auto w-full h-screen custom-background-img shadow-md rounded-md text-center"
         style={{ fontFamily: "DM Sans, sans-serif" }}
       >
-        <div className="grid grid-cols-3 bg-gray-500/50 border-b border-accent mb-4 h-20">
+        <div className="grid grid-cols-3 bg-surface border-b h-20 mb-4">
           <div></div>
           <div className="flex items-center justify-center">
-          <h2 className="text-2xl text-white font-bold py-4">
-            Welcome to Profit
-            <span className="bg-gray-950 rounded-md text-accent px-1">
-              Guard
-            </span>{" "}
-          </h2>
+            <h2 className="text-2xl text-white font-bold py-4">
+              Welcome to Profit
+              <span className="bg-gray-950 rounded-md text-accent px-1">
+                Guard
+              </span>{" "}
+            </h2>
           </div>
           <div className="ml-auto my-auto">
             <button
@@ -39,22 +39,25 @@ const HomePage = () => {
             </button>
           </div>
         </div>
-        <div className="flex flex-col w-full h-5/6 mx-auto p-4 mb-4 bg-gray-500/50 items-center">
-          <div className="flex flex-col items-center py-5 justify-center mb-4">
-            <h1 className="font-semibold text-white text-2xl px-4 py-1 rounded-t-md text-center">
+        <div className="flex flex-col flex-grow w-full items-center">
+          <div className="flex flex-col text-start items-start justify-center">
+            <h1 className="ml-4 bg-surface/80 font-semibold underline text-white text-2xl px-4 py-1 rounded-t-md">
               {" "}
               What is ProfitGuard?{" "}
             </h1>
-            <div className="w-5/6 p-4 rounded-md bg-gray-600 shadow-lg">
+            <div className="w-full p-4 bg-surface/80 shadow-lg">
               <p className="font-extralight text-white p-4 rounded-md text-lg text-left">
-                ProfitGuard is an IPS (Internal Profit System) designed to be easy
-                to use and effective. Our goal is to put more money in your pocket
-                without needing more sales! Please login below to begin using
-                ProfitGuard now!
+                ProfitGuard is an IPS (Internal Profit System) designed to be
+                easy to use and effective. Our goal is to put more money in your
+                pocket without needing more sales! Please login below to begin
+                using ProfitGuard now!
               </p>
             </div>
           </div>
-          <div id="img-container" className="w-5/6 flex flex-row rounded-md bg-gray-600 shadow-lg items-center justify-between p-4 rounded-md">
+          <div
+            id="img-container"
+            className="w-full h-full flex flex-row rounded-md bg-surface/80 shadow-lg items-center justify-between p-4 rounded-md"
+          >
             <div className="flex flex-col items-center justify-center">
               <img
                 src="https://i.imgur.com/3pwLRSO.png"
@@ -85,6 +88,11 @@ const HomePage = () => {
                 View important information about your business
               </label>
             </div>
+          </div>
+          <div className="flex flex-grow text-sm items-end w-full text-white">
+            <a className="hover:underline" href="http://www.freepik.com">
+              Designed by coolvector / Freepik
+            </a>
           </div>
         </div>
       </div>

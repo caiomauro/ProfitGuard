@@ -16,6 +16,7 @@ const MainPage = () => {
   const [goal, setGoal] = useState();
   const [userGoal, setUserGoal] = useState();
   const [goalInputVal, setGoalInputVal] = useState("");
+  const [showSetGoal, setShowGoal] = useState(false);
 
   useEffect(() => {
     handleLogItemData();
@@ -238,6 +239,10 @@ const MainPage = () => {
     return result;
   };
 
+  const toggleSetGoal = () => {
+    setShowGoal(!showSetGoal);
+  };
+
   // Inside your component, you can call this function to get the highest profit items
   const highestProfitItems = getHighestProfitItems();
 
@@ -299,6 +304,7 @@ const MainPage = () => {
                 labelText
               />
               <p className="text-red-400 py-2">{goalInputVal}</p>
+              {showSetGoal ? (
               <div className="flex flex-row flex-start items-center gap-4">
                 <input
                   value={goal}
@@ -312,8 +318,21 @@ const MainPage = () => {
                 >
                   Set Goal
                 </button>
-
+                <button
+                  className="hover:underline text-center bg-gray-500 p-2 rounded-md"
+                  onClick={toggleSetGoal}
+                >
+                  Hide
+                </button>
               </div>
+              ) : (
+                <button
+                className="hover:underline text-center bg-gray-500 p-2 rounded-md"
+                onClick={toggleSetGoal}
+              >
+                Set Goal
+              </button>
+              )}
             </div>
           </div>
         </div>
@@ -347,50 +366,10 @@ const MainPage = () => {
         </div>
 
         <div
-          className="max-w-md mx-auto p-4 bg-gray-100 rounded-md"
+          className="flex flex-col mr-auto p-4 w-full bg-surface text-white rounded-2xl"
           style={{ fontFamily: "DM Sans, sans-serif" }}
         >
-          <h2 className="text-2xl font-bold mb-4">Highest Profit Items:</h2>
-
-          <input
-            type="text"
-            placeholder="Add Category"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
-            className="mb-2 p-2 border rounded-md w-full"
-          />
-
-          <input
-            type="text"
-            placeholder="Delete Category Name"
-            value={deleteCategoryName}
-            onChange={(e) => setDeleteCategoryName(e.target.value)}
-            className="mb-2 p-2 border rounded-md w-full"
-          />
-
-          <input
-            type="text"
-            placeholder="Delete Category Id"
-            value={deleteCategoryId}
-            onChange={(e) => setDeleteCategoryId(e.target.value)}
-            className="mb-4 p-2 border rounded-md w-full"
-          />
-
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
-            Post Data
-          </button>
-
-          <button className="bg-red-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-red-600 focus:outline-none focus:shadow-outline-red">
-            Delete Item Data
-          </button>
-
-          <button className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray">
-            Log Category Data
-          </button>
-
-          <button className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray">
-            Log Item Data
-          </button>
+          <p className="font-bold text-md m-4">If you would like to request a feature or report a bug please contact me on <a className="underline" href="https://www.linkedin.com/in/caiomauro/" target="_blank">linkedin</a>!</p>
         </div>
       </div>
     </div>
