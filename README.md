@@ -5,12 +5,12 @@ ProfitGuard is an internal profit management system. The goal is to allow my par
 
 <table>
   <tr>
-    <td><img src="main.png" alt="Main Page" style="width:500px;"></td>
-    <td><img src="completed.png" alt="Completed Tasks" style="width:500px;"></td>
+    <td><img src="HomePage.png" alt="Main Page" style="width:500px;"></td>
+    <td><img src="Login.png" alt="Login Page" style="width:500px;"></td>
   </tr>
   <tr>
-    <td><img src="createpost.png" alt="Create Post" style="width:500px;"></td>
-    <td><img src="login.png" alt="Login Page" style="width:500px;"></td>
+    <td><img src="Dashboard.png" alt="Dashboard" style="width:500px;"></td>
+    <td><img src="AddItem.png" alt="Item Page" style="width:500px;"></td>
   </tr>
 </table>
 
